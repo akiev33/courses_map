@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Email Verification</title>
+   <style>
+
+       .card {
+           font-family: "Helvetica Neue";
+           text-align: center;
+           margin: auto;
+           width: 40%;
+       }
+
+       .btn {
+           padding: 7px;
+           margin-bottom: 10px;
+           background: #993CF3;
+           color: #fff;
+           border-radius: 5px;
+       }
+
+   </style>
+</head>
+<body>
+    <div><center>
+    <h3>Здравствуйте,</h3>
+    <h3>Вы получили это письмо, так как данная почта была использована при регистрации учетной записи</h3>
+    <h3>Чтобы подтвердить вашу регистрацию, нажмите кнопку ниже.</h3>
+    </center></div>
+
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text text-center"><strong>{{ small_text_detail }}</strong></p>
+            <a class="text-center verify-button" href="http://localhost:8000{% url 'activate_account' activation_code=activation_code %}">
+{#                http://localhost:8000/activation_code/231235423/#}
+                <button type="button" class="btn">Подтвердить регистрацию</button>
+            </a>
+        </div>
+    </div>
+
+    <div><center>
+    <h5>Если вы не регистрировали новую учетную запись на board.kg, игнорируйте это письмо.</h5>
+
+    </center></div>
+</body>
+</html>
