@@ -1,12 +1,20 @@
 from django.urls import path, include
-from authentications.views import RegisterApiView, ActivationView, LoginApiView, LogoutApiView, ChangePasswordView
+
+from authentications.views import UserRegisterApiView, UserProfileAPIView,\
+                             EducationCentreProfileAPIView, TeacherProfileAPIView, NonProfitOrganizationProfileAPIView,\
+                             EmployerProfileAPIView, ActivationView, LoginApiView, LogoutApiView, ChangePasswordView
 
 
 from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
-    path('register/', RegisterApiView.as_view()),
+    path('register/', UserRegisterApiView.as_view()),
+    path('user_profile/<int:id>/', UserProfileAPIView.as_view()),
+    path('education_centre_profile/<int:id>/', EducationCentreProfileAPIView.as_view()),
+    path('teacher_profile/<int:id>/', TeacherProfileAPIView.as_view()),
+    path('non_profit_org_profile/<int:id>/', NonProfitOrganizationProfileAPIView.as_view()),
+    path('employer_profile/<int:id>/', EmployerProfileAPIView.as_view()),
     path('login/', LoginApiView.as_view(), name='login'),
     path('activate/<uuid:activation_code>/', ActivationView.as_view(), name='activate_account'),
     path('logout/', LogoutApiView.as_view()),
