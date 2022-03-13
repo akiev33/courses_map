@@ -4,12 +4,16 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
+from django.core.mail import send_mail
+from django_rest_passwordreset.signals import reset_password_token_created
+from django.dispatch import receiver
+from django.urls import reverse
 from main.settings import AUTH_USER_MODEL
 from phonenumber_field.modelfields import PhoneNumberField
 
 
 class UserManager(BaseUserManager):
+
     def create_user(self, email, password=None, **kwargs):
         email = self.normalize_email(email)
         user = self.model(email=email, **kwargs)
@@ -27,6 +31,7 @@ class UserManager(BaseUserManager):
 
 
 class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
+    
     email = models.EmailField(_('email address'), max_length=255, unique=True)
 
     is_staff = models.BooleanField(_('staff status'), default=False,

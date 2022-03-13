@@ -1,3 +1,8 @@
 from django.contrib import admin
+from user_relation_choice.models import UserRelationChoiceCourses, UserRelationChoiceEducationCentreProfile, UserRelationChoiceInternShip, UserRelationChoiceTeacherProfile
 
-# Register your models here.
+
+admin.site.register(UserRelationChoiceTeacherProfile)
+admin.site.register(UserRelationChoiceEducationCentreProfile)
+admin.site.register(UserRelationChoiceCourses)
+admin.site.register(UserRelationChoiceInternShip)

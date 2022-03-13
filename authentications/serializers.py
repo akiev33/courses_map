@@ -1,3 +1,4 @@
+from importlib.metadata import requires
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate, password_validation
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -21,6 +22,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=6, required=True, write_only=True)
     password_confirmation = serializers.CharField(min_length=6, required=True, write_only=True)
     user_type = serializers.ChoiceField(choices=USER_TYPE_CHOICES)
+
 
     class Meta:
         model = User
@@ -93,6 +95,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.Serializer):
 
+
     class Meta:
         model = User
         fields = [
@@ -102,6 +105,7 @@ class UserSerializer(serializers.Serializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
+
 
     class Meta:
         model = UserProfile
@@ -134,6 +138,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class EducationCentreProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
+
 
     class Meta:
         model = EducationCentreProfile
@@ -172,6 +177,7 @@ class EducationCentreProfileSerializer(serializers.ModelSerializer):
 
 class TeacherProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
+
 
     class Meta:
         model = TeacherProfile
@@ -219,6 +225,7 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
 class NonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
 
+
     class Meta:
         model = NonProfitOrganizationProfile
         fields = [
@@ -250,6 +257,7 @@ class NonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
 
 class EmployerProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
+
 
     class Meta:
         model = EmployerProfile
