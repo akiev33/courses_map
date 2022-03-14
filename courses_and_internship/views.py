@@ -13,7 +13,8 @@ class CoursesAPIView(viewsets.ModelViewSet):
 
         if user.user_type == 'education_centre':
             serializer.save(user=user)
-        # else
+    
+        
 
 
 class InternShipAPIView(viewsets.ModelViewSet):

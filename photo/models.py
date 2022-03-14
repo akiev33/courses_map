@@ -17,7 +17,7 @@ class EducationCentrePhoto(models.Model):
 
 class TeacherProfilePhoto(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    teacher = models.ForeignKey('authentications.TeacherProfile', on_delete=models.CASCADE)
+    teacher = models.ForeignKey('authentications.TeacherProfile', on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField()
     name = models.CharField(max_length=255)
 
@@ -27,7 +27,7 @@ class TeacherProfilePhoto(models.Model):
 
 class NonProfitOrganizationProfilePhoto(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    nonprofitorganization = models.ForeignKey('authentications.NonProfitOrganizationProfile', on_delete=models.CASCADE)
+    nonprofitorganization = models.ForeignKey('authentications.NonProfitOrganizationProfile', on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField()
     name = models.CharField(max_length=255)
 
@@ -37,7 +37,7 @@ class NonProfitOrganizationProfilePhoto(models.Model):
 
 class EmployerProfilePhoto(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    employer = models.ForeignKey('authentications.EmployerProfile', on_delete=models.CASCADE)
+    employer = models.ForeignKey('authentications.EmployerProfile', on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField()
     name = models.CharField(max_length=255)
 
