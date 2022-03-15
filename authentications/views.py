@@ -75,11 +75,11 @@ class UserProfileAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsOwnerOrStaffOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = UserProfile.objects.all(user=user)
-        serializer = UserProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def list(self, request):
+    #     user = request.user
+    #     query = UserProfile.objects.all(user=user)
+    #     serializer = UserProfileSerializer(query, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
     def perform_update(self, serializer):
         user = self.request.user
@@ -97,21 +97,53 @@ class EducationCentreProfileAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsOwnerOrStaffOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = EducationCentreProfile.objects.all(user=user)
-        serializer = EducationCentreProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def list(self, request):
+    #     user = request.user
+    #     query = EducationCentreProfile.objects.all(user=user)
+    #     serializer = EducationCentreProfileSerializer(query, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def perform_update(self, serializer):
-        user = self.request.user
+    # def perform_update(self, serializer):
+    #     user = self.request.user
+    #
+    #     if user.is_staff:
+    #         data = {'first_name': self.request.data.get('first_name'),
+    #                 'last_name': self.request.data.get('last_name'),
+    #                 'father_name': self.request.data.get('father_name'),
+    #                 'verification': self.request.data.get('verification')
+    #                 }
+    #     else:
+    #         data = {'logo': self.request.data.get('logo'),
+    #                 'description': self.request.data.get('description'),
+    #                 'instagram': self.request.data.get('instagram'),
+    #                 'video': self.request.data.get('video'),
+    #                 'address': self.request.data.get('address'),
+    #                 'number_of_students': self.request.data.get('number_of_students'),
+    #                 'email': self.request.data.get('email'),
+    #                 'phone_number': self.request.data.get('phone_number')
+    #                 }
+    #     serializer.save(validated_data=data)
 
-        if user.is_staff:
-            serializer.save(first_name=self.request.data.get('first_name'),
-                            last_name=self.request.data.get('last_name'),
-                            father_name=self.request.data.get('father_name'),
-                            verification=self.request.data.get('verification')
-                            )
+    # def get_permissions(self):
+    #     # Your logic should be all here
+    #     if self.request.user.is_staff:
+    #         data = {'first_name': self.request.data.get('first_name'),
+    #                 'last_name': self.request.data.get('last_name'),
+    #                 'father_name': self.request.data.get('father_name'),
+    #                 'verification': self.request.data.get('verification'),
+    #                 }
+    #     else:
+    #         data = {'logo': self.request.data.get('logo'),
+    #                 'description': self.request.data.get('description'),
+    #                 'instagram': self.request.data.get('instagram'),
+    #                 'video': self.request.data.get('video'),
+    #                 'address': self.request.data.get('address'),
+    #                 'number_of_students': self.request.data.get('number_of_students'),
+    #                 'email': self.request.data.get('email'),
+    #                 'phone_number': self.request.data.get('phone_number'),
+    #                 }
+    #
+    #     return super(EducationCentreProfileAPIView, self).get_permissions()
 
 
 class TeacherProfileAPIView(RetrieveUpdateAPIView):
@@ -120,11 +152,11 @@ class TeacherProfileAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsOwnerOrStaffOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = TeacherProfile.objects.all(user=user)
-        serializer = TeacherProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def list(self, request):
+    #     user = request.user
+    #     query = TeacherProfile.objects.all(user=user)
+    #     serializer = TeacherProfileSerializer(query, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
     def perform_update(self, serializer):
         user = self.request.user
@@ -143,11 +175,11 @@ class NonProfitOrganizationProfileAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsOwnerOrStaffOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = NonProfitOrganizationProfile.objects.all(user=user)
-        serializer = NonProfitOrganizationProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def list(self, request):
+    #     user = request.user
+    #     query = NonProfitOrganizationProfile.objects.all(user=user)
+    #     serializer = NonProfitOrganizationProfileSerializer(query, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
     def perform_update(self, serializer):
         user = self.request.user
@@ -165,11 +197,11 @@ class EmployerProfileAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsOwnerOrStaffOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = EmployerProfile.objects.all(user=user)
-        serializer = EmployerProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def list(self, request):
+    #     user = request.user
+    #     query = EmployerProfile.objects.all(user=user)
+    #     serializer = EmployerProfileSerializer(query, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
     def perform_update(self, serializer):
         user = self.request.user
@@ -179,3 +211,5 @@ class EmployerProfileAPIView(RetrieveUpdateAPIView):
                             last_name=self.request.data.get('last_name'),
                             father_name=self.request.data.get('father_name'),
                             )
+
+

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate, password_validation
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
+from rest_framework.decorators import action
 
 from .models import UserProfile, EducationCentreProfile, TeacherProfile, NonProfitOrganizationProfile, EmployerProfile
 
@@ -96,7 +96,7 @@ class UserSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = [
-            'image', 'first_name', 'last_name', 'father_name', 'email', 'phone_number',
+            'id', 'image', 'first_name', 'last_name', 'father_name', 'email', 'phone_number',
         ]
 
 
@@ -106,7 +106,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = [
-            'image', 'first_name', 'last_name', 'father_name', 'about_self',
+            'id', 'image', 'first_name', 'last_name', 'father_name', 'about_self',
             'email', 'phone_number',
         ]
 
@@ -125,6 +125,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         instance.save()
 
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
         user.email = validated_data.get('email', instance.email)
         user.phone_number = validated_data.get('phone_number', instance.phone_number)
         user.save()
@@ -138,8 +141,8 @@ class EducationCentreProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationCentreProfile
         fields = [
-            'logo', 'first_name', 'last_name', 'father_name', 'organization_name', 'description', 'instagram', 'video',
-            'address', 'number_of_students',
+            'id', 'logo', 'first_name', 'last_name', 'father_name', 'organization_name', 'description', 'instagram',
+            'video', 'address', 'number_of_students',
             'email', 'phone_number', 'verification',
         ]
 
@@ -163,11 +166,19 @@ class EducationCentreProfileSerializer(serializers.ModelSerializer):
 
         instance.save()
 
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
         user.email = validated_data.get('email', instance.email)
         user.phone_number = validated_data.get('phone_number', instance.phone_number)
         user.save()
 
         return instance
+
+    # @action(detail=False, methods=['patch'])
+    # def perform_update(self, request):
+    #     if request.user.is_staff:
+    #         self.update(instance)
 
 
 class TeacherProfileSerializer(serializers.ModelSerializer):
@@ -176,7 +187,7 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeacherProfile
         fields = [
-            'avatar', 'first_name', 'last_name', 'father_name', 'description', 'instagram', 'video',
+            'id', 'avatar', 'first_name', 'last_name', 'father_name', 'description', 'instagram', 'video',
             'address', 'number_of_students', 'work_experience', 'category', 'cost_per_hour', 'time_table',
             'lesson_duration', 'education', 'sale',
             'email', 'phone_number', 'verification',
@@ -209,6 +220,9 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
 
         instance.save()
 
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
         user.email = validated_data.get('email', instance.email)
         user.phone_number = validated_data.get('phone_number', instance.phone_number)
         user.save()
@@ -222,7 +236,7 @@ class NonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = NonProfitOrganizationProfile
         fields = [
-            'first_name', 'last_name', 'father_name', 'organization_name', 'description',
+            'id', 'first_name', 'last_name', 'father_name', 'organization_name', 'description',
             'email', 'phone_number',
         ]
 
@@ -241,6 +255,9 @@ class NonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
 
         instance.save()
 
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
         user.email = validated_data.get('email', instance.email)
         user.phone_number = validated_data.get('phone_number', instance.phone_number)
         user.save()
@@ -254,7 +271,7 @@ class EmployerProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployerProfile
         fields = [
-            'first_name', 'last_name', 'father_name', 'organization_name', 'description',
+            'id', 'first_name', 'last_name', 'father_name', 'organization_name', 'description',
             'email', 'phone_number',
         ]
 
@@ -273,6 +290,9 @@ class EmployerProfileSerializer(serializers.ModelSerializer):
 
         instance.save()
 
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
         user.email = validated_data.get('email', instance.email)
         user.phone_number = validated_data.get('phone_number', instance.phone_number)
         user.save()
