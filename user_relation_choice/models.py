@@ -8,11 +8,11 @@ User = get_user_model()
 class UserRelationChoiceEducationCentreProfile(models.Model):
     
     RATE_CHOICES = (
-        (1, 'Плохо'),
-        (2, 'Мне не очень понравилось'),
-        (3, 'Нормально'),
-        (4, 'Хорошо'),
-        (5, 'Отличная статья')
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5)
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -27,11 +27,11 @@ class UserRelationChoiceEducationCentreProfile(models.Model):
 class UserRelationChoiceTeacherProfile(models.Model):
     
     RATE_CHOICES = (
-        (1, 'Плохо'),
-        (2, 'Мне не очень понравилось'),
-        (3, 'Нормально'),
-        (4, 'Хорошо'),
-        (5, 'Отличная статья')
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5)
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -46,11 +46,11 @@ class UserRelationChoiceTeacherProfile(models.Model):
 class UserRelationChoiceCourses(models.Model):
     
     RATE_CHOICES = (
-        (1, 'Плохо'),
-        (2, 'Мне не очень понравилось'),
-        (3, 'Нормально'),
-        (4, 'Хорошо'),
-        (5, 'Отличная статья')
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5)
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -65,11 +65,11 @@ class UserRelationChoiceCourses(models.Model):
 class UserRelationChoiceInternShip(models.Model):
     
     RATE_CHOICES = (
-        (1, 'Плохо'),
-        (2, 'Мне не очень понравилось'),
-        (3, 'Нормально'),
-        (4, 'Хорошо'),
-        (5, 'Отличная статья')
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5)
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)

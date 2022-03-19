@@ -28,4 +28,6 @@ urlpatterns = [
     path('api/v1/courses_and_internship/', include('courses_and_internship.urls')),
     path('api/v1/categories/', include('categories.urls')),
     path('api/v1/photo/', include('photo.urls')),
+    path('api/v1/news/', include('news.urls')),
+    path('api/v1/favorite/', include('favorite.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

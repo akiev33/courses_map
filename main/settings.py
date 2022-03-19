@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'courses_and_internship',
     'categories',
     'photo',
+    'favorite',
 ]
 
 MIDDLEWARE = [

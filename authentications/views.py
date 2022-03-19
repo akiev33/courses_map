@@ -1,4 +1,3 @@
-from urllib import request
 from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
 from rest_framework import status
@@ -11,11 +10,14 @@ from authentications.serializers import RegisterSerializer, LoginSerializer, Cha
                                         UserProfileSerializer, EducationCentreProfileSerializer,\
                                         TeacherProfileSerializer, NonProfitOrganizationProfileSerializer,\
                                         EmployerProfileSerializer
+from authentications.serializers import AdminUserProfileSerializer, AdminEducationCentreProfileSerializer,\
+                                        AdminTeacherProfileSerializer, AdminNonProfitOrganizationProfileSerializer,\
+                                        AdminEmployerProfileSerializer
 
 from rest_framework.generics import UpdateAPIView, CreateAPIView, RetrieveUpdateAPIView
 from authentications.email import email_send
 
-from .permissions import IsOwnerOrStaffOrReadOnly
+from .permissions import IsOwnerOrStaffOrReadOnly, IsOwnerOrReadOnly, IsStaffOnly
 from .models import UserProfile, EducationCentreProfile, TeacherProfile, NonProfitOrganizationProfile, EmployerProfile
 
 User = get_user_model()
@@ -36,9 +38,7 @@ class UserRegisterApiView(APIView):
 
 
 class ActivationView(View):
-
     def get(self, request, activation_code):
-
         try:
             user = User.objects.get(activation_code=activation_code)
             user.is_active = True
@@ -75,121 +75,71 @@ class ChangePasswordView(UpdateAPIView):
 class UserProfileAPIView(RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer
     queryset = UserProfile.objects.all()
-    permission_classes = [IsOwnerOrStaffOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = UserProfile.objects.all(user=user)
-        serializer = UserProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def perform_update(self, serializer):
-        user = self.request.user
+class AdminUserProfileAPIView(RetrieveUpdateAPIView):
+    serializer_class = AdminUserProfileSerializer
+    queryset = UserProfile.objects.all()
+    permission_classes = [IsStaffOnly]
+    lookup_field = "id"
 
-        if user.is_staff:
-            serializer.save(first_name=self.request.data.get('first_name'),
-                            last_name=self.request.data.get('last_name'),
-                            father_name=self.request.data.get('father_name'),
-                            )       
 
 class EducationCentreProfileAPIView(RetrieveUpdateAPIView):
     serializer_class = EducationCentreProfileSerializer
     queryset = EducationCentreProfile.objects.all()
-    permission_classes = [IsOwnerOrStaffOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = EducationCentreProfile.objects.all(user=user)
-        serializer = EducationCentreProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def perform_update(self, serializer):
-        user = self.request.user
-
-        if user.is_staff:
-            serializer.save(first_name=self.request.data.get('first_name'),
-                            last_name=self.request.data.get('last_name'),
-                            father_name=self.request.data.get('father_name'),
-                            verification=self.request.data.get('verification')
-                            )
-        # elif user == EducationCentreProfile.objects.filter(id=pk).first().user:
-        #     serializer.save(
-        #         logo=self.request.data.get('logo'),
-        #         description=self.request.data.get('description'),
-        #         instagram=self.request.data.get('instagram'),
-        #         video=self.request.data.get('video'),
-        #         address=self.request.data.get('address'),
-        #         number_of_students=self.request.data.get('number_of_students'),
-        #         email=self.request.data.get('email'),
-        #         phone_number=self.request.data.get('phone_number'),
-        #     )
-
+class AdminEducationCentreProfileAPIView(RetrieveUpdateAPIView):
+    serializer_class = AdminEducationCentreProfileSerializer
+    queryset = EducationCentreProfile.objects.all()
+    permission_classes = [IsStaffOnly]
+    lookup_field = "id"
 
 
 class TeacherProfileAPIView(RetrieveUpdateAPIView):
     serializer_class = TeacherProfileSerializer
     queryset = TeacherProfile.objects.all()
-    permission_classes = [IsOwnerOrStaffOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = TeacherProfile.objects.all(user=user)
-        serializer = TeacherProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def perform_update(self, serializer):
-        user = self.request.user
-
-        if user.is_staff:
-            serializer.save(first_name=self.request.data.get('first_name'),
-                            last_name=self.request.data.get('last_name'),
-                            father_name=self.request.data.get('father_name'),
-                            verification=self.request.data.get('verification')
-                            )
+class AdminTeacherProfileAPIView(RetrieveUpdateAPIView):
+    serializer_class = AdminTeacherProfileSerializer
+    queryset = TeacherProfile.objects.all()
+    permission_classes = [IsStaffOnly]
+    lookup_field = "id"
 
 
 class NonProfitOrganizationProfileAPIView(RetrieveUpdateAPIView):
-    serializer_class = NonProfitOrganizationProfileSerializer
+    serializer_class = AdminNonProfitOrganizationProfileSerializer
     queryset = NonProfitOrganizationProfile.objects.all()
-    permission_classes = [IsOwnerOrStaffOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = NonProfitOrganizationProfile.objects.all(user=user)
-        serializer = NonProfitOrganizationProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def perform_update(self, serializer):
-        user = self.request.user
-
-        if user.is_staff:
-            serializer.save(first_name=self.request.data.get('first_name'),
-                            last_name=self.request.data.get('last_name'),
-                            father_name=self.request.data.get('father_name'),
-                            )
+class AdminNonProfitOrganizationProfileAPIView(RetrieveUpdateAPIView):
+    serializer_class = NonProfitOrganizationProfileSerializer
+    queryset = NonProfitOrganizationProfile.objects.all()
+    permission_classes = [IsStaffOnly]
+    lookup_field = "id"
 
 
 class EmployerProfileAPIView(RetrieveUpdateAPIView):
     serializer_class = EmployerProfileSerializer
     queryset = EmployerProfile.objects.all()
-    permission_classes = [IsOwnerOrStaffOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     lookup_field = "id"
 
-    def list(self, request):
-        user = request.user
-        query = EmployerProfile.objects.all(user=user)
-        serializer = EmployerProfileSerializer(query, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def perform_update(self, serializer):
-        user = self.request.user
+class AdminEmployerProfileAPIView(RetrieveUpdateAPIView):
+    serializer_class = AdminEmployerProfileSerializer
+    queryset = EmployerProfile.objects.all()
+    permission_classes = [IsStaffOnly]
+    lookup_field = "id"
 
-        if user.is_staff:
-            serializer.save(first_name=self.request.data.get('first_name'),
-                            last_name=self.request.data.get('last_name'),
-                            father_name=self.request.data.get('father_name'),
-                            )
+
+

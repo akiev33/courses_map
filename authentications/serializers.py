@@ -1,8 +1,6 @@
-from importlib.metadata import requires
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate, password_validation
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 
 from .models import UserProfile, EducationCentreProfile, TeacherProfile, NonProfitOrganizationProfile, EmployerProfile
 
@@ -22,7 +20,6 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=6, required=True, write_only=True)
     password_confirmation = serializers.CharField(min_length=6, required=True, write_only=True)
     user_type = serializers.ChoiceField(choices=USER_TYPE_CHOICES)
-
 
     class Meta:
         model = User
@@ -95,7 +92,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.Serializer):
 
-
     class Meta:
         model = User
         fields = [
@@ -105,7 +101,6 @@ class UserSerializer(serializers.Serializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
-
 
     class Meta:
         model = UserProfile
@@ -122,13 +117,39 @@ class UserProfileSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.phone_number = validated_data.get('phone_number', instance.phone_number)
 
-        # change if user is stuff
+        instance.save()
+
+        user.email = validated_data.get('email', instance.email)
+        user.phone_number = validated_data.get('phone_number', instance.phone_number)
+        user.save()
+
+        return instance
+
+
+class AdminUserProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer
+
+    class Meta:
+        model = UserProfile
+        fields = [
+            'id', 'image', 'first_name', 'last_name', 'father_name', 'about_self',
+            'email', 'phone_number',
+        ]
+
+    def update(self, instance, validated_data):
+        user = instance.user
+
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.father_name = validated_data.get('father_name', instance.father_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
 
         instance.save()
 
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
         user.email = validated_data.get('email', instance.email)
         user.phone_number = validated_data.get('phone_number', instance.phone_number)
         user.save()
@@ -139,12 +160,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class EducationCentreProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
 
-
     class Meta:
         model = EducationCentreProfile
         fields = [
-            'id', 'logo', 'first_name', 'last_name', 'father_name', 'organization_name', 'description', 'instagram', 'video',
-            'address', 'number_of_students',
+            'id', 'logo', 'first_name', 'last_name', 'father_name', 'organization_name', 'description', 'instagram',
+            'video', 'address', 'number_of_students',
             'email', 'phone_number', 'verification',
         ]
 
@@ -160,12 +180,6 @@ class EducationCentreProfileSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.phone_number = validated_data.get('phone_number', instance.phone_number)
 
-        # change if user is stuff
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.father_name = validated_data.get('father_name', instance.father_name)
-        instance.verification = validated_data.get('verification', instance.verification)
-
         instance.save()
 
         user.email = validated_data.get('email', instance.email)
@@ -175,9 +189,41 @@ class EducationCentreProfileSerializer(serializers.ModelSerializer):
         return instance
 
 
-class TeacherProfileSerializer(serializers.ModelSerializer):
+class AdminEducationCentreProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
 
+    class Meta:
+        model = EducationCentreProfile
+        fields = [
+            'id', 'logo', 'first_name', 'last_name', 'father_name', 'organization_name', 'description', 'instagram',
+            'video', 'address', 'number_of_students',
+            'email', 'phone_number', 'verification',
+        ]
+
+    def update(self, instance, validated_data):
+        user = instance.user
+
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.father_name = validated_data.get('father_name', instance.father_name)
+        instance.verification = validated_data.get('verification', instance.verification)
+        instance.email = validated_data.get('email', instance.email)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+
+        instance.save()
+
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
+        user.email = validated_data.get('email', instance.email)
+        user.phone_number = validated_data.get('phone_number', instance.phone_number)
+        user.save()
+
+        return instance
+
+
+class TeacherProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer
 
     class Meta:
         model = TeacherProfile
@@ -207,12 +253,6 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.phone_number = validated_data.get('phone_number', instance.phone_number)
 
-        # change if user is stuff
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.father_name = validated_data.get('father_name', instance.father_name)
-        instance.verification = validated_data.get('verification', instance.verification)
-
         instance.save()
 
         user.email = validated_data.get('email', instance.email)
@@ -222,9 +262,42 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
         return instance
 
 
-class NonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
+class AdminTeacherProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
 
+    class Meta:
+        model = TeacherProfile
+        fields = [
+            'id', 'avatar', 'first_name', 'last_name', 'father_name', 'description', 'instagram', 'video',
+            'address', 'number_of_students', 'work_experience', 'category', 'cost_per_hour', 'time_table',
+            'lesson_duration', 'education', 'sale',
+            'email', 'phone_number', 'verification',
+        ]
+
+    def update(self, instance, validated_data):
+        user = instance.user
+
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.father_name = validated_data.get('father_name', instance.father_name)
+        instance.verification = validated_data.get('verification', instance.verification)
+        instance.email = validated_data.get('email', instance.email)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+
+        instance.save()
+
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
+        user.email = validated_data.get('email', instance.email)
+        user.phone_number = validated_data.get('phone_number', instance.phone_number)
+        user.save()
+
+        return instance
+
+
+class NonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer
 
     class Meta:
         model = NonProfitOrganizationProfile
@@ -241,11 +314,6 @@ class NonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.phone_number = validated_data.get('phone_number', instance.phone_number)
 
-        # change if user is stuff
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.father_name = validated_data.get('father_name', instance.father_name)
-
         instance.save()
 
         user.email = validated_data.get('email', instance.email)
@@ -255,9 +323,39 @@ class NonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
         return instance
 
 
-class EmployerProfileSerializer(serializers.ModelSerializer):
+class AdminNonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer
 
+    class Meta:
+        model = NonProfitOrganizationProfile
+        fields = [
+            'id', 'first_name', 'last_name', 'father_name', 'organization_name', 'description',
+            'email', 'phone_number',
+        ]
+
+    def update(self, instance, validated_data):
+        user = instance.user
+
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.father_name = validated_data.get('father_name', instance.father_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+
+        instance.save()
+
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
+        user.email = validated_data.get('email', instance.email)
+        user.phone_number = validated_data.get('phone_number', instance.phone_number)
+        user.save()
+
+        return instance
+
+
+class EmployerProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer
 
     class Meta:
         model = EmployerProfile
@@ -274,13 +372,39 @@ class EmployerProfileSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.phone_number = validated_data.get('phone_number', instance.phone_number)
 
-        # change if user is stuff
+        instance.save()
+
+        user.email = validated_data.get('email', instance.email)
+        user.phone_number = validated_data.get('phone_number', instance.phone_number)
+        user.save()
+
+        return instance
+
+
+class AdminEmployerProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer
+
+    class Meta:
+        model = EmployerProfile
+        fields = [
+            'id', 'first_name', 'last_name', 'father_name', 'organization_name', 'description',
+            'email', 'phone_number',
+        ]
+
+    def update(self, instance, validated_data):
+        user = instance.user
+
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.father_name = validated_data.get('father_name', instance.father_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
 
         instance.save()
 
+        user.first_name = validated_data.get('first_name', instance.first_name)
+        user.last_name = validated_data.get('last_name', instance.last_name)
+        user.father_name = validated_data.get('father_name', instance.father_name)
         user.email = validated_data.get('email', instance.email)
         user.phone_number = validated_data.get('phone_number', instance.phone_number)
         user.save()
