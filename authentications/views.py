@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
 from rest_framework import status
@@ -90,8 +91,7 @@ class UserProfileAPIView(RetrieveUpdateAPIView):
             serializer.save(first_name=self.request.data.get('first_name'),
                             last_name=self.request.data.get('last_name'),
                             father_name=self.request.data.get('father_name'),
-                            )
-
+                            )       
 
 class EducationCentreProfileAPIView(RetrieveUpdateAPIView):
     serializer_class = EducationCentreProfileSerializer
@@ -114,6 +114,18 @@ class EducationCentreProfileAPIView(RetrieveUpdateAPIView):
                             father_name=self.request.data.get('father_name'),
                             verification=self.request.data.get('verification')
                             )
+        # elif user == EducationCentreProfile.objects.filter(id=pk).first().user:
+        #     serializer.save(
+        #         logo=self.request.data.get('logo'),
+        #         description=self.request.data.get('description'),
+        #         instagram=self.request.data.get('instagram'),
+        #         video=self.request.data.get('video'),
+        #         address=self.request.data.get('address'),
+        #         number_of_students=self.request.data.get('number_of_students'),
+        #         email=self.request.data.get('email'),
+        #         phone_number=self.request.data.get('phone_number'),
+        #     )
+
 
 
 class TeacherProfileAPIView(RetrieveUpdateAPIView):

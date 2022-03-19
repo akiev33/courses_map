@@ -99,7 +99,7 @@ class UserSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = [
-            'image', 'first_name', 'last_name', 'father_name', 'email', 'phone_number',
+            'id', 'image', 'first_name', 'last_name', 'father_name', 'email', 'phone_number',
         ]
 
 
@@ -110,7 +110,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = [
-            'image', 'first_name', 'last_name', 'father_name', 'about_self',
+            'id', 'image', 'first_name', 'last_name', 'father_name', 'about_self',
             'email', 'phone_number',
         ]
 
@@ -143,7 +143,7 @@ class EducationCentreProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationCentreProfile
         fields = [
-            'logo', 'first_name', 'last_name', 'father_name', 'organization_name', 'description', 'instagram', 'video',
+            'id', 'logo', 'first_name', 'last_name', 'father_name', 'organization_name', 'description', 'instagram', 'video',
             'address', 'number_of_students',
             'email', 'phone_number', 'verification',
         ]
@@ -182,7 +182,7 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeacherProfile
         fields = [
-            'avatar', 'first_name', 'last_name', 'father_name', 'description', 'instagram', 'video',
+            'id', 'avatar', 'first_name', 'last_name', 'father_name', 'description', 'instagram', 'video',
             'address', 'number_of_students', 'work_experience', 'category', 'cost_per_hour', 'time_table',
             'lesson_duration', 'education', 'sale',
             'email', 'phone_number', 'verification',
@@ -229,7 +229,7 @@ class NonProfitOrganizationProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = NonProfitOrganizationProfile
         fields = [
-            'first_name', 'last_name', 'father_name', 'organization_name', 'description',
+            'id', 'first_name', 'last_name', 'father_name', 'organization_name', 'description',
             'email', 'phone_number',
         ]
 
@@ -262,7 +262,7 @@ class EmployerProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployerProfile
         fields = [
-            'first_name', 'last_name', 'father_name', 'organization_name', 'description',
+            'id', 'first_name', 'last_name', 'father_name', 'organization_name', 'description',
             'email', 'phone_number',
         ]
 
