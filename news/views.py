@@ -79,3 +79,4 @@ class NewsAPIView(viewsets.ModelViewSet):
 
         elif user.user_type == 'employer':
             serializer.save(user=user, employer=employer1)
+            

@@ -1,35 +1,25 @@
-from rest_framework import generics
-
-from rest_framework import status
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
 
-from .models import Favorite
-from .serializers import FavoriteCreateSerializers
+from favorite.models import Favorite
+
+from favorite.serializers import FavoriteSerializers
+from favorite.permissions import IsOwnerOnly
 
 
-class FavoriteCreateAPIView(generics.CreateAPIView):
+class FavoriteAPIView(viewsets.ModelViewSet):
+    serializer_class = FavoriteSerializers
+    permission_classes = [IsOwnerOnly]
     queryset = Favorite.objects.all()
-    serializer_class = FavoriteCreateSerializers
-    
-    def get_serializer_context(self):
-        return {
-            "user": self.request.user
-        }
 
+    def list(self, request, *args, **kwargs):
+        owner = request.user
+        query = Favorite.objects.filter(user=owner)
+        serializer = FavoriteSerializers(query, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-class FavoriteAPIView(generics.ListAPIView):
-    serializer_class = FavoriteCreateSerializers
-
-    def get_queryset(self):
-        queryset = Favorite.objects.filter(user_id=self.request.user)
-        return queryset
-
-
-class FavoriteDeleteAPIView(generics.DestroyAPIView):
-    queryset = Favorite.objects.all()
-    serializer_class = FavoriteCreateSerializers
-    lookup_field = 'id'
-
-    def get_queryset(self):
-        queryset = Favorite.objects.filter(user_id=self.request.user)
-        return queryset
+    def perform_create(self, serializer):
+        if self.request.user.user_type == 'user':
+            serializer.save(user=self.request.user)
