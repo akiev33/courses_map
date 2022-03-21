@@ -5,10 +5,6 @@ from .views import (NewsAPIView)
 
 
 router = SimpleRouter()
-# router.register("nonprofitorganization_news", NewsNonProfitOrganizationAPIView)
-# router.register("centre_news", NewsEducationCentreAPIView)
-# router.register("employer_news", NewsEmployerProfileAPIView)
-# router.register("teacher_news", NewsTeacherProfileAPIView)
 router.register("", NewsAPIView)
 
 

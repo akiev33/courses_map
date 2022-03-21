@@ -4,9 +4,12 @@ from photo.models import (EducationCentrePhoto, TeacherProfilePhoto, EmployerPro
 from photo.serializers import (EducationCentrePhotoSerializers, TeacherProfilePhotoSerializers, EmployerProfilePhotoSerializers, NonProfitOrganizationProfilePhotoSerializers)
 from authentications.models import EducationCentreProfile, TeacherProfile, EmployerProfile, NonProfitOrganizationProfile
 
+from .permissions import IsOwnerOrStaffOrReadOnly
+
 
 class EducationCentrePhotoAPIView(viewsets.ModelViewSet):
     serializer_class = EducationCentrePhotoSerializers
+    permission_classes = [IsOwnerOrStaffOrReadOnly]
     queryset = EducationCentrePhoto.objects.all()
 
     def perform_create(self, serializer):
@@ -19,6 +22,7 @@ class EducationCentrePhotoAPIView(viewsets.ModelViewSet):
 
 class TeacherProfilePhotoAPIView(viewsets.ModelViewSet):
     serializer_class = TeacherProfilePhotoSerializers
+    permission_classes = [IsOwnerOrStaffOrReadOnly]
     queryset = TeacherProfilePhoto.objects.all()
 
     def perform_create(self, serializer):
@@ -31,6 +35,7 @@ class TeacherProfilePhotoAPIView(viewsets.ModelViewSet):
 
 class EmployerProfilePhotoAPIView(viewsets.ModelViewSet):
     serializer_class = EmployerProfilePhotoSerializers
+    permission_classes = [IsOwnerOrStaffOrReadOnly]
     queryset = EmployerProfilePhoto.objects.all()
 
     def perform_create(self, serializer):
@@ -43,6 +48,7 @@ class EmployerProfilePhotoAPIView(viewsets.ModelViewSet):
 
 class NonProfitOrganizationProfilePhotoAPIView(viewsets.ModelViewSet):
     serializer_class = NonProfitOrganizationProfilePhotoSerializers
+    permission_classes = [IsOwnerOrStaffOrReadOnly]
     queryset = NonProfitOrganizationProfilePhoto.objects.all()
 
     def perform_create(self, serializer):
