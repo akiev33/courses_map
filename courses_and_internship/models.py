@@ -24,7 +24,6 @@ class Courses(models.Model):
     video = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     number_of_free_places = models.PositiveIntegerField()
-    rate = models.PositiveIntegerField()
     category = models.ManyToManyField('categories.Category')
     cost_per_month = models.PositiveIntegerField()
     time_table = models.CharField(max_length=255)
@@ -33,6 +32,11 @@ class Courses(models.Model):
     sale = models.CharField(max_length=255, null=True, blank=True)
     formats = models.PositiveSmallIntegerField(choices=FORMATS_CHOICES)
     courses_duration = models.CharField(max_length=255)
+
+    # rate
+    number_of_comments = models.PositiveIntegerField(default=0, blank=True)
+    sum_of_rate = models.PositiveIntegerField(default=0, blank=True)
+    rate = models.FloatField(default=0, blank=True)
 
     def __str__(self):
         return f'{self.user}, Courses name: {self.courses_name}'
@@ -45,7 +49,11 @@ class InternShip(models.Model):
     time_table = models.CharField(max_length=255)
     duration = models.CharField(max_length=255)
     position = models.CharField(max_length=255)
-    rate = models.PositiveIntegerField()
+
+    # rate
+    number_of_comments = models.PositiveIntegerField(default=0, blank=True)
+    sum_of_rate = models.PositiveIntegerField(default=0, blank=True)
+    rate = models.FloatField(default=0, blank=True)
 
     def __str__(self):
         return f'{self.user}, Position: {self.position}, Salary: {self.salary}'

@@ -165,7 +165,7 @@ class EducationCentreProfileSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'logo', 'first_name', 'last_name', 'father_name', 'organization_name', 'description', 'instagram',
             'video', 'address', 'number_of_students',
-            'email', 'phone_number', 'verification',
+            'email', 'phone_number', 'verification', 'rate',
         ]
 
     def update(self, instance, validated_data):
@@ -197,7 +197,7 @@ class AdminEducationCentreProfileSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'logo', 'first_name', 'last_name', 'father_name', 'organization_name', 'description', 'instagram',
             'video', 'address', 'number_of_students',
-            'email', 'phone_number', 'verification',
+            'email', 'phone_number', 'verification', 'rate',
         ]
 
     def update(self, instance, validated_data):
@@ -231,7 +231,7 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
             'id', 'avatar', 'first_name', 'last_name', 'father_name', 'description', 'instagram', 'video',
             'address', 'number_of_students', 'work_experience', 'category', 'cost_per_hour', 'time_table',
             'lesson_duration', 'education', 'sale',
-            'email', 'phone_number', 'verification',
+            'email', 'phone_number', 'verification', 'rate',
         ]
 
     def update(self, instance, validated_data):
@@ -271,7 +271,7 @@ class AdminTeacherProfileSerializer(serializers.ModelSerializer):
             'id', 'avatar', 'first_name', 'last_name', 'father_name', 'description', 'instagram', 'video',
             'address', 'number_of_students', 'work_experience', 'category', 'cost_per_hour', 'time_table',
             'lesson_duration', 'education', 'sale',
-            'email', 'phone_number', 'verification',
+            'email', 'phone_number', 'verification', 'rate',
         ]
 
     def update(self, instance, validated_data):

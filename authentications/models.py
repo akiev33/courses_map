@@ -4,12 +4,10 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.core.mail import send_mail
-from django_rest_passwordreset.signals import reset_password_token_created
-from django.dispatch import receiver
-from django.urls import reverse
 from main.settings import AUTH_USER_MODEL
 from phonenumber_field.modelfields import PhoneNumberField
+
+from categories.models import Category
 
 
 class UserManager(BaseUserManager):
@@ -124,7 +122,11 @@ class EducationCentreProfile(models.Model):
     address = models.CharField(max_length=250, blank=False, null=True)
     number_of_students = models.PositiveIntegerField(null=True, blank=True)
     verification = models.BooleanField(default=False, blank=True)
-    rate = models.PositiveIntegerField(default=0, blank=True)
+
+    # rate
+    number_of_comments = models.PositiveIntegerField(default=0, blank=True)
+    sum_of_rate = models.PositiveIntegerField(default=0, blank=True)
+    rate = models.FloatField(default=0, blank=True)
 
     def __str__(self):
         return f"Profile-ID: {self.id}, Manager's name: {self.first_name}, organization: {self.organization_name}"
@@ -148,13 +150,17 @@ class TeacherProfile(models.Model):
     number_of_students = models.PositiveIntegerField(null=True, blank=True)
     verification = models.BooleanField(default=False, blank=True)
     work_experience = models.TextField(null=True, blank=True)
-    # category = models.ManyToManyField(Category, related_name='category')
+    categories = models.ManyToManyField(Category, related_name='categories')
     cost_per_hour = models.PositiveIntegerField(blank=False, null=True)
     time_table = models.CharField(max_length=250, null=True, blank=True)
     lesson_duration = models.CharField(max_length=250, null=True, blank=True)
     education = models.TextField(blank=False, null=True)
     sale = models.CharField(max_length=250, blank=False, null=True)
-    rate = models.PositiveIntegerField(default=0, blank=True)
+
+    # rate
+    number_of_comments = models.PositiveIntegerField(default=0, blank=True)
+    sum_of_rate = models.PositiveIntegerField(default=0, blank=True)
+    rate = models.FloatField(default=0, blank=True)
 
     def __str__(self):
         return f"Profile-ID: {self.id}, Full name: {self.first_name, self.last_name}"

@@ -54,12 +54,12 @@ class UserRelationChoiceCourses(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    profile = models.ForeignKey('authentications.TeacherProfile', on_delete=models.CASCADE)
+    course = models.ForeignKey('courses_and_internship.Courses', on_delete=models.CASCADE)
     rate = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
     comments = models.TextField()
 
     def __str__(self):
-        return f'{self.user}, Comments from: {self.profile}'
+        return f'{self.user}, Comments from: {self.course}'
 
 
 class UserRelationChoiceInternShip(models.Model):
@@ -73,12 +73,12 @@ class UserRelationChoiceInternShip(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    profile = models.ForeignKey('authentications.TeacherProfile', on_delete=models.CASCADE)
+    internship = models.ForeignKey('courses_and_internship.InternShip', on_delete=models.CASCADE)
     rate = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
     comments = models.TextField()
 
     def __str__(self):
-        return f'{self.user}, Comments from: {self.profile}'
+        return f'{self.user}, Comments from: {self.internship}'
 
 
 
