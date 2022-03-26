@@ -7,10 +7,12 @@ from authentications.models import EducationCentreProfile, TeacherProfile, Emplo
 from .permissions import ForNewsIsStaffAndIsOwnerOrReadOnly
 
 
+
 class NewsAPIView(viewsets.ModelViewSet):
     serializer_class = NewsSerializers
     permission_classes = [ForNewsIsStaffAndIsOwnerOrReadOnly]
     queryset = News.objects.all()
+
 
     def perform_create(self, serializer):
         nonprofitorganization1 = NonProfitOrganizationProfile.objects.filter(user=self.request.user).first()

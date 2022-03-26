@@ -1,3 +1,4 @@
+from hashlib import blake2b
 from django.db import models
 
 from django.contrib.auth import get_user_model
@@ -12,6 +13,11 @@ class News(models.Model):
     centre = models.ForeignKey('authentications.EducationCentreProfile', on_delete=models.CASCADE, null=True, blank=True)
     teacher = models.ForeignKey('authentications.TeacherProfile', on_delete=models.CASCADE, null=True, blank=True)
     employer = models.ForeignKey('authentications.EmployerProfile', on_delete=models.CASCADE, null=True, blank=True)
+    photo1 = models.ImageField(null=True, blank=True)
+    photo2 = models.ImageField(null=True, blank=True)
+    photo3 = models.ImageField(null=True, blank=True)
+    photo4 = models.ImageField(null=True, blank=True)
+    photo5 = models.ImageField(null=True, blank=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     href = models.CharField(max_length=255, null=True, blank=True)
