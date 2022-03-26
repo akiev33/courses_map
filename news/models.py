@@ -1,4 +1,3 @@
-from hashlib import blake2b
 from django.db import models
 
 from django.contrib.auth import get_user_model
