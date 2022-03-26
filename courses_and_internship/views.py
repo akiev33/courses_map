@@ -3,6 +3,7 @@ from courses_and_internship.models import (Courses, InternShip)
 from courses_and_internship.serializers import (CoursesSerializers, InternShipSerializers)
 
 from .permissions import IsEducationCentreAndIsOwnerOrReadOnly, IsEmployerCentreAndIsOwnerOrReadOnly
+from authentications.models import EducationCentreProfile, EmployerProfile
 
 
 class CoursesAPIView(viewsets.ModelViewSet):
@@ -12,8 +13,9 @@ class CoursesAPIView(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
-        serializer.save(user=user)
-    
+        user_profile = EducationCentreProfile.objects.filter(user=user).first()
+        serializer.save(user=user, organization=user_profile)
+
 
 class InternShipAPIView(viewsets.ModelViewSet):
     serializer_class = InternShipSerializers
@@ -22,8 +24,5 @@ class InternShipAPIView(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
-        serializer.save(user=user)
-
-
-
-
+        user_profile = EmployerProfile.objects.filter(user=user).first()
+        serializer.save(user=user, employer=user_profile)

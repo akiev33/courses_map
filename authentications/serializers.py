@@ -244,7 +244,7 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
         instance.address = validated_data.get('address', instance.address)
         instance.number_of_students = validated_data.get('number_of_students', instance.number_of_students)
         instance.work_experience = validated_data.get('work_experience', instance.work_experience)
-        instance.category = validated_data.get('category', instance.category)
+        instance.category.set(validated_data.get('category', instance.category))
         instance.cost_per_hour = validated_data.get('cost_per_hour', instance.cost_per_hour)
         instance.time_table = validated_data.get('time_table', instance.time_table)
         instance.lesson_duration = validated_data.get('lesson_duration', instance.lesson_duration)

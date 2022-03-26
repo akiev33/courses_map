@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth import get_user_model
 
+from authentications.models import EducationCentreProfile, EmployerProfile
 
 User = get_user_model()
 
@@ -15,6 +16,7 @@ class Courses(models.Model):
     )
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    organization = models.ForeignKey(EducationCentreProfile, on_delete=models.CASCADE, null=True, blank=True)
     whats_app = PhoneNumberField()
     courses_name = models.CharField(max_length=250)
     description = models.TextField()
@@ -23,7 +25,7 @@ class Courses(models.Model):
     instagram = models.CharField(max_length=250)
     video = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    number_of_free_places = models.PositiveIntegerField()
+    number_of_free_places = models.PositiveIntegerField(null=True, blank=True)
     category = models.ManyToManyField('categories.Category')
     cost_per_month = models.PositiveIntegerField()
     time_table = models.CharField(max_length=255)
@@ -31,7 +33,7 @@ class Courses(models.Model):
     programm = models.TextField()
     sale = models.CharField(max_length=255, null=True, blank=True)
     formats = models.PositiveSmallIntegerField(choices=FORMATS_CHOICES)
-    courses_duration = models.CharField(max_length=255)
+    courses_duration = models.CharField(max_length=255, null=True, blank=True)
 
     # rate
     number_of_comments = models.PositiveIntegerField(default=0, blank=True)
@@ -44,6 +46,7 @@ class Courses(models.Model):
 
 class InternShip(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    employer = models.ForeignKey(EmployerProfile, on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField()
     salary = models.CharField(max_length=255)
     time_table = models.CharField(max_length=255)
