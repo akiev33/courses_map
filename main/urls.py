@@ -30,4 +30,4 @@ urlpatterns = [
     path('api/v1/photo/', include('photo.urls')),
     path('api/v1/news/', include('news.urls')),
     path('api/v1/favorite/', include('favorite.urls'))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
