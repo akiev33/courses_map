@@ -4,6 +4,7 @@ cryptography==36.0.1
 dj-database-url==0.5.0
 Django==4.0.3
 django-cleanup==6.0.0
+django-cors-headers==3.11.0
 django-filter==21.1
 django-phonenumber-field==6.1.0
 django-rest-passwordreset==1.2.1

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'django_cleanup.apps.CleanupConfig',
     'phonenumber_field',
+    'corsheaders',
 
 
     #custom
@@ -63,11 +64,13 @@ INSTALLED_APPS = [
     'categories',
     'photo',
     'favorite',
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -210,6 +213,13 @@ if DEBUG:
     ]
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8080',
+    'http://127.0.0.1:8000'
+]
+
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
