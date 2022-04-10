@@ -7,7 +7,7 @@ def email_send(user):
     context = {
         'text_detail': 'Спасибо за регистрацию',
         'email': user.email,
-        'domain': 'http://127.0.0.1:8000/',
+        'domain': 'http://courses-map.herokuapp.com/',
         'activation_code': user.activation_code,
     }
 
