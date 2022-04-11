@@ -8,3 +8,4 @@ class CategoryAPIView(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     serializer_class = CategorySerializers
     queryset = Category.objects.all()
+    

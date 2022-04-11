@@ -5,16 +5,21 @@ from courses_and_internship.serializers import (CoursesSerializers, InternShipSe
 from .permissions import IsEducationCentreAndIsOwnerOrReadOnly, IsEmployerCentreAndIsOwnerOrReadOnly
 from authentications.models import EducationCentreProfile, EmployerProfile
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 class CoursesAPIView(viewsets.ModelViewSet):
     serializer_class = CoursesSerializers
     permission_classes = [IsEducationCentreAndIsOwnerOrReadOnly]
     queryset = Courses.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ['user']
 
     def perform_create(self, serializer):
         user = self.request.user
         user_profile = EducationCentreProfile.objects.filter(user=user).first()
         serializer.save(user=user, organization=user_profile)
+        
 
 
 class InternShipAPIView(viewsets.ModelViewSet):
