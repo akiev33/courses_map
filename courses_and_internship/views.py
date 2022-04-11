@@ -13,7 +13,7 @@ class CoursesAPIView(viewsets.ModelViewSet):
     permission_classes = [IsEducationCentreAndIsOwnerOrReadOnly]
     queryset = Courses.objects.all()
     filter_backends = [DjangoFilterBackend]
-    filter_fields = ['user']
+    filter_fields = ['category']
 
     def perform_create(self, serializer):
         user = self.request.user
